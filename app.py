@@ -24,11 +24,15 @@ handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
 # OPENAI API Key初始化設定
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-file_path = '狼人殺data.txt'
+file1_path = '狼人殺data.txt'
+file2_path = '對局data.txt'
 
 # 用读取模式打开文件
-with open(file_path, 'r', encoding='utf-8') as file:
-    background_knowledge = file.read()
+with open(file1_path, 'r', encoding='utf-8') as file1:
+    background_knowledge = file1.read()
+
+with open(file2_path, 'r', encoding='utf-8') as file2:
+   Game_formation  = file2.read()
 
 
 def GPT_response(text):
