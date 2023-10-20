@@ -32,7 +32,7 @@ with open(file1_path, 'r', encoding='utf-8') as file1:
     background_knowledge = file1.read()
 
 with open(file2_path, 'r', encoding='utf-8') as file2:
-   Game_formation  = file2.read()
+   Game_iformation  = file2.read()
 
 
 def GPT_response(text):
@@ -42,6 +42,7 @@ def GPT_response(text):
     messages=[
         {"role": "system", "content": "You are a helpful assistant"},
         {"role": "user", "content": background_knowledge},
+        {"role": "user", "content": Game_iformation},
         {"role": "user", "content": text}
     ]
 )
