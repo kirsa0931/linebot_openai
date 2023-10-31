@@ -33,7 +33,9 @@ with open(file1_path, 'r', encoding='utf-8') as file1:
 
 with open(file2_path, 'r', encoding='utf-8') as file2:
    Game_iformation  = file2.read()
-
+    
+# 添加一个用于记录发言的文件路径
+recorded_messages_file = 'recorded_messages.txt'
 
 def GPT_response(text):
     # 接收回應
@@ -68,19 +70,26 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant"},
-                {"role": "user", "content": msg}
-            ]
-        )
-        GPT_answer = response['choices'][0]['message']['content']
-        print(GPT_answer)
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=GPT_answer))
-    except:
-        line_bot_api.reply_message(event.reply_token, TextSendMessage('你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息'))
+    if msg == "輪到A發言":
+        with open(recorded_messages_file, 'r', encoding='utf-8') as f:
+            recorded_messages = f.read()
+                try:
+                    response = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=[
+                        {"role": "system", "content": "You are a helpful assistant"},
+                        {"role": "user", "content": recorded_messages}
+                    ]
+                )
+                GPT_answer = response['choices'][0]['message']['content']
+                print(GPT_answer)
+                line_bot_api.reply_message(event.reply_token, TextSendMessage(text=GPT_answer))
+            except:
+                line_bot_api.reply_message(event.reply_token, TextSendMessage('你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息'))
+    else:
+        # 否则，将用户的发言写入记录文件
+        with open(recorded_messages_file, 'a', encoding='utf-8') as f:
+            f.write(msg + '\n')
         
 
 @handler.add(PostbackEvent)
