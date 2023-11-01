@@ -35,7 +35,7 @@ with open(file2_path, 'r', encoding='utf-8') as file2:
    Game_iformation  = file2.read()
     
 # 添加一个用于记录发言的文件路径
-recorded_messages_file = 'recorded_messages.txt'
+#recorded_messages_file = 'recorded_messages.txt'
 
 def GPT_response(text):
     # 接收回應
