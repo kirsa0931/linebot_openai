@@ -36,7 +36,7 @@ with open(file2_path, 'r', encoding='utf-8') as file2:
    Game_iformation = file2.read()
     
 #with open(file3_path, 'r', encoding='utf-8') as file3:
-   fine_tuning_data = file3.read()
+   #fine_tuning_data = file3.read()
 
 def GPT_response(text):
     # 接收回應
