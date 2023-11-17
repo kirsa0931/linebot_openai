@@ -35,7 +35,7 @@ with open(file1_path, 'r', encoding='utf-8') as file1:
 with open(file2_path, 'r', encoding='utf-8') as file2:
    Game_iformation = file2.read()
     
-with open(file3_path, 'r', encoding='utf-8') as file3:
+#with open(file3_path, 'r', encoding='utf-8') as file3:
    fine_tuning_data = file3.read()
 
 def GPT_response(text):
@@ -45,7 +45,6 @@ def GPT_response(text):
     messages=[
         {"role": "user", "content": background_knowledge},
         {"role": "user", "content": Game_iformation},
-        {"role": "user", "content": fine_tuning_data},
         {"role": "user", "content": text}
     ]
 )
