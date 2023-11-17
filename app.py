@@ -43,7 +43,6 @@ def GPT_response(text):
     response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
     messages=[
-        {"role": "system", "content": "You are a helpful assistant"},
         {"role": "user", "content": background_knowledge},
         {"role": "user", "content": Game_iformation},
         {"role": "user", "content": fine_tuning_data},
