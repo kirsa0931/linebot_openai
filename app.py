@@ -49,7 +49,8 @@ def GPT_response(text):
         {"role": "user", "content": text}
     ]
 )
-
+    answer = response['choices'][0]['message']['content']
+    return answer
 
 # 監聽所有來自 /callback 的 Post Request
 @app.route("/callback", methods=['POST'])
