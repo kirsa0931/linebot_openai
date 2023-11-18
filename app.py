@@ -81,8 +81,8 @@ def handle_message(event):
         GPT_answer = response['choices'][0]['message']['content']
         print(GPT_answer)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=GPT_answer))
-    except:
-        line_bot_api.reply_message(event.reply_token, TextSendMessage('你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息'))
+    except Exception as e:
+        print(f"Error calling OpenAI API: {e}")
         
 
 @handler.add(PostbackEvent)
