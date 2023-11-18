@@ -26,7 +26,7 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 file1_path = '狼人殺data.txt'
 file2_path = '對局data.txt'
-#file3_path = '對局微調.txt'
+file3_path = '對局微調.txt'
 
 # 用读取模式打开文件
 with open(file1_path, 'r', encoding='utf-8') as file1:
@@ -35,8 +35,8 @@ with open(file1_path, 'r', encoding='utf-8') as file1:
 with open(file2_path, 'r', encoding='utf-8') as file2:
    Game_iformation = file2.read()
     
-#with open(file3_path, 'r', encoding='utf-8') as file3:
-   #fine_tuning_data = file3.read()
+with open(file3_path, 'r', encoding='utf-8') as file3:
+   fine_tuning_data = file3.read()
 
 def GPT_response(text):
     # 接收回應
@@ -45,6 +45,7 @@ def GPT_response(text):
     messages=[
         {"role": "system", "content": "You are a helpful assistant"},
         {"role": "user", "content": background_knowledge},
+        {"role": "user", "content": fine_tuning_data},
         {"role": "user", "content": Game_iformation},
         {"role": "user", "content": text}
     ]
@@ -82,7 +83,7 @@ def handle_message(event):
         print(GPT_answer)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=GPT_answer))
     except Exception as e:
-        print(f"Error calling OpenAI API: {e}")
+        line_bot_api.reply_message(event.reply_token, TextSendMessage('你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息'))
         
 
 @handler.add(PostbackEvent)
