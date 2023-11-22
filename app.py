@@ -72,7 +72,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
-      if msg == "輪到6號發言":
+    if msg == "輪到6號發言":
         with open(recorded_messages_file, 'r', encoding='utf-8') as f:
              recorded_messages = f.read()
         try:
@@ -89,7 +89,7 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=GPT_answer))
         except:
             line_bot_api.reply_message(event.reply_token, TextSendMessage('你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息'))
-      elif msg = "遊戲結束":
+      elif msg == "遊戲結束":
          with open(recorded_messages_file, 'w', encoding='utf-8') as f:
              f.truncate(0)
       else:
