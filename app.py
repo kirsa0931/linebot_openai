@@ -68,22 +68,32 @@ def callback():
 
 
 # 處理訊息
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    msg = event.message.text
-    try:
-        response = openai.ChatCompletion.create(
+ @handler.add(MessageEvent, message=TextMessage)
+ def handle_message(event):
+     msg = event.message.text
+     if msg == "輪到6號發言":
+        with open(recorded_messages_file, 'r', encoding='utf-8') as f:
+            recorded_messages = f.read()
+        try:
+            response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant"},
-                {"role": "user", "content": msg}
+                {"role": "user", "content": recorded_messages}
             ]
         )
-        GPT_answer = response['choices'][0]['message']['content']
-        print(GPT_answer)
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=GPT_answer))
-    except Exception as e:
-        line_bot_api.reply_message(event.reply_token, TextSendMessage('你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息'))
+            GPT_answer = response['choices'][0]['message']['content']
+            print(GPT_answer)
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=GPT_answer))
+        except:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage('你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息'))
+    elif msg = "遊戲結束":
+        with open(recorded_messages_file, 'w', encoding='utf-8') as f:
+            f.truncate(0)
+    else:
+        # 否则，将用户的发言写入记录文件
+        with open(recorded_messages_file, 'a', encoding='utf-8') as f:
+            f.write(msg + '\n')
         
 
 @handler.add(PostbackEvent)
