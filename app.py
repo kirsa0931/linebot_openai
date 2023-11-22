@@ -42,15 +42,16 @@ with open(file3_path, 'r', encoding='utf-8') as file3:
 def GPT_response(text):
     # 接收回應
     response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant"},
-        {"role": "user", "content": background_knowledge},
-        {"role": "user", "content": fine_tuning_data},
-        {"role": "user", "content": Game_iformation},
-        {"role": "user", "content": text}
-    ]
-)
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant"},
+            {"role": "user", "content": background_knowledge},
+            {"role": "user", "content": fine_tuning_data},
+            {"role": "user", "content": Game_iformation},
+            {"role": "user", "content": text}
+        ]
+    )
+    return response
 
 # 監聽所有來自 /callback 的 Post Request
 @app.route("/callback", methods=['POST'])
@@ -80,7 +81,7 @@ def handle_message(event):
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant"},
-                {"role": "user", "content": recorded_messages}
+                {"role": "user", "content": recorded_messages},
                 {"role": "user", "content": "請以號碼6號進行發言，點評別的玩家的發言並且最後說出你要投的對象並說明原因，限定在80個字以內"}
             ]
         )
@@ -89,10 +90,10 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=GPT_answer))
         except:
             line_bot_api.reply_message(event.reply_token, TextSendMessage('你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息'))
-      elif msg == "遊戲結束":
+    elif msg == "遊戲結束":
          with open(recorded_messages_file, 'w', encoding='utf-8') as f:
              f.truncate(0)
-      else:
+    else:
          # 否则，将用户的发言写入记录文件
          with open(recorded_messages_file, 'a', encoding='utf-8') as f:
              f.write(msg + '\n')
