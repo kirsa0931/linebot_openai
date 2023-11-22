@@ -27,6 +27,7 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 file1_path = '狼人殺data.txt'
 file2_path = '對局data.txt'
 file3_path = '對局微調.txt'
+recorded_messages_file = 'recorded_messages.txt'
 
 # 用读取模式打开文件
 with open(file1_path, 'r', encoding='utf-8') as file1:
