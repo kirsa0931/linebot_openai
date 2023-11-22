@@ -80,6 +80,7 @@ def callback():
             messages=[
                 {"role": "system", "content": "You are a helpful assistant"},
                 {"role": "user", "content": recorded_messages}
+                {"role": "user", "content": "請以號碼6號進行發言，點評別的玩家的發言並且最後說出你要投的對象並說明原因，限定在80個字以內"}
             ]
         )
             GPT_answer = response['choices'][0]['message']['content']
