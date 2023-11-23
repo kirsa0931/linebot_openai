@@ -27,7 +27,7 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 file1_path = '狼人殺data.txt'
 file2_path = '對局data.txt'
 file3_path = '對局微調.txt'
-#recorded_messages_file = 'recorded_messages.txt'
+recorded_messages_file = 'recorded_messages.txt'
 
 # 用读取模式打开文件
 with open(file1_path, 'r', encoding='utf-8') as file1:
@@ -73,19 +73,30 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
-    try:
-        response = openai.ChatCompletion.create(
+    if msg == "輪到6號發言":
+        with open(recorded_messages_file, 'r', encoding='utf-8') as f:
+             recorded_messages = f.read()
+        try:
+            response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant"},
-                {"role": "user", "content": msg}
+                {"role": "user", "content": recorded_messages},
+                {"role": "user", "content": "請以號碼6號進行發言，點評別的玩家的發言並且最後說出你要投的對象並說明原因，限定在80個字以內"}
             ]
         )
-        GPT_answer = response['choices'][0]['message']['content']
-        print(GPT_answer)
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=GPT_answer))
-    except Exception as e:
-        line_bot_api.reply_message(event.reply_token, TextSendMessage('你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息'))
+            GPT_answer = response['choices'][0]['message']['content']
+            print(GPT_answer)
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=GPT_answer))
+        except:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage('你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息'))
+    elif msg == "遊戲結束":
+         with open(recorded_messages_file, 'w', encoding='utf-8') as f:
+             f.truncate(0)
+    else:
+         # 否则，将用户的发言写入记录文件
+         with open(recorded_messages_file, 'a', encoding='utf-8') as f:
+             f.write(msg + '\n')
         
 
 @handler.add(PostbackEvent)
