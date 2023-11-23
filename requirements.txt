@@ -2,3 +2,4 @@ line-bot-sdk
 flask
 openai==0.27.8
 gunicorn
+gunicorn -w 2 -b 0.0.0.0:4343 app:app --timeout 300
