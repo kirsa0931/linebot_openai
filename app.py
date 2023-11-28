@@ -116,5 +116,5 @@ def welcome(event):
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
-    app.config['TIMEOUT'] = 900
+    app.config['TIMEOUT'] = 3600
     app.run(host='0.0.0.0', port=port)
