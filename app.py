@@ -27,6 +27,7 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 file1_path = '狼人殺data.txt'
 file2_path = '對局data.txt'
 file3_path = '對局微調.txt'
+file4_path = '術語.txt'
 recorded_messages_file = 'recorded_messages.txt'
 
 # 用读取模式打开文件
@@ -34,10 +35,14 @@ with open(file1_path, 'r', encoding='utf-8') as file1:
     background_knowledge = file1.read()
 
 with open(file2_path, 'r', encoding='utf-8') as file2:
-   Game_iformation = file2.read()
+    Game_iform = file2.read()
     
 with open(file3_path, 'r', encoding='utf-8') as file3:
-   fine_tuning_data = file3.read()
+    fine_tuning_data = file3.read()
+    
+with open(file4_path, 'r', encoding='utf-8') as file4:
+    rule = file4.read()
+
 
 def GPT_response(text):
     # 接收回應
@@ -46,8 +51,9 @@ def GPT_response(text):
         messages=[
             {"role": "system", "content": "You are a player in the game."},
             {"role": "user", "content": background_knowledge},
+            {"role": "user", "content": rule},
             {"role": "user", "content": fine_tuning_data},
-            {"role": "user", "content": Game_iformation},
+            {"role": "user", "content": Game_iform},
             {"role": "user", "content": text}
         ]
     )
