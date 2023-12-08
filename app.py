@@ -28,6 +28,7 @@ file1_path = '狼人殺data.txt'
 file2_path = '對局data.txt'
 file3_path = '對局微調.txt'
 file4_path = '術語.txt'
+file5_path = '角色prompt與6人規則'
 recorded_messages_file = 'recorded_messages.txt'
 
 # 用读取模式打开文件
@@ -42,7 +43,9 @@ with open(file3_path, 'r', encoding='utf-8') as file3:
     
 with open(file4_path, 'r', encoding='utf-8') as file4:
     rule = file4.read()
-
+    
+with open(file5_path, 'r', encoding='utf-8') as file5:
+    prompt_set = file5.read()
 
 def GPT_response(text):
     # 接收回應
@@ -87,6 +90,7 @@ def handle_message(event):
             messages=[
                 {"role": "system", "content": "You are a helpful assistant"},
                 {"role": "user", "content": rule},
+                {"role": "user", "content": prompt_set},
                 {"role": "user", "content": recorded_messages},
             ]
         )
