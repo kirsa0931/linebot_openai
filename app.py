@@ -51,7 +51,6 @@ def GPT_response(text):
         messages=[
             {"role": "system", "content": "You are a player in the game."},
             {"role": "user", "content": background_knowledge},
-            {"role": "user", "content": rule},
             {"role": "user", "content": fine_tuning_data},
             {"role": "user", "content": Game_iform},
             {"role": "user", "content": text}
@@ -87,6 +86,7 @@ def handle_message(event):
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant"},
+                {"role": "user", "content": rule},
                 {"role": "user", "content": recorded_messages},
             ]
         )
