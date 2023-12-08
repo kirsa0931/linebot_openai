@@ -55,6 +55,7 @@ def GPT_response(text):
             {"role": "system", "content": "You are a player in the game."},
             {"role": "user", "content": background_knowledge},
             {"role": "user", "content": fine_tuning_data},
+            {"role": "user", "content": prompt_set},
             {"role": "user", "content": Game_iform},
             {"role": "user", "content": text}
         ]
@@ -90,7 +91,6 @@ def handle_message(event):
             messages=[
                 {"role": "system", "content": "你是一個狼人殺玩家"},
                 {"role": "user", "content": rule},
-                {"role": "user", "content": prompt_set},
                 {"role": "user", "content": recorded_messages},
             ]
         )
