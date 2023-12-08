@@ -78,7 +78,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
-    if msg == "輪到6號發言":
+    if msg == "請回答":
         with open(recorded_messages_file, 'r', encoding='utf-8') as f:
              recorded_messages = f.read()
         try:
