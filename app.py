@@ -88,7 +88,7 @@ def handle_message(event):
             response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant"},
+                {"role": "system", "content": "你是一個狼人殺玩家"},
                 {"role": "user", "content": rule},
                 {"role": "user", "content": prompt_set},
                 {"role": "user", "content": recorded_messages},
