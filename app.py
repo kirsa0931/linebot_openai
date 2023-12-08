@@ -28,7 +28,7 @@ file1_path = '狼人殺data.txt'
 file2_path = '對局data.txt'
 file3_path = '對局微調.txt'
 file4_path = '術語.txt'
-file5_path = '角色prompt與6人規則'
+file5_path = '角色prompt與6人規則.txt'
 recorded_messages_file = 'recorded_messages.txt'
 
 # 用读取模式打开文件
