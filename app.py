@@ -53,9 +53,9 @@ def GPT_response(text):
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a player in the game."},
-            {"role": "system", "content": background_knowledge},
-            {"role": "system", "content": fine_tuning_data},
-            {"role": "system", "content": Game_iform},
+            {"role": "user", "content": background_knowledge},
+            {"role": "user", "content": fine_tuning_data},
+            {"role": "user", "content": Game_iform},
             {"role": "user", "content": text}
         ]
     )
