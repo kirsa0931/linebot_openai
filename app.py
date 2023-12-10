@@ -30,6 +30,7 @@ file3_path = '對局微調.txt'
 file4_path = '術語.txt'
 file5_path = '角色prompt與6人規則.txt'
 file6_path = '評分資料.txt'
+file7_path = '模擬對局.txt'
 recorded_messages_file = 'recorded_messages.txt'
 
 # 用读取模式打开文件
@@ -50,6 +51,9 @@ with open(file5_path, 'r', encoding='utf-8') as file5:
 
 with open(file6_path, 'r', encoding='utf-8') as file6:
     score_data = file6.read()
+    
+with open(file7_path, 'r', encoding='utf-8') as file7:
+    simulation = file7.read()
 
 def GPT_response(text):
     # 接收回應
@@ -61,6 +65,7 @@ def GPT_response(text):
             {"role": "user", "content": fine_tuning_data},
             {"role": "user", "content": prompt_set},
             {"role": "user", "content": score_data},
+            {"role": "user", "content": simulation},
             {"role": "user", "content": Game_iform},
             {"role": "user", "content": text}
         ]
